@@ -1,0 +1,236 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pythonhighlight}
+\DeclareUnicodeCharacter{2212}{-}
+\title{PHYS270: Assignment 1}
+\author{Devejya Raghuvanshi }
+\date{Winter 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem 1}
+    \subsection*{Part a.}
+        Using the law of cosines, the relation between Altitude, Declination, Latitude and Hour Angle is the following:
+        \[sin A = sin(\delta)sin(\beta) + cos(\delta)cos(\beta)cos(HA)\]
+        Where, $A:=$ Altitude, $\delta:=$ Declination, $\beta:=$ Latitude, $HA:=$ Hour Angle.
+        Since, $\beta$ is constant, therefore, $HA$ and $\delta$ are the variables here. To maximise $A$, we need to minimise $cos(\delta)cos(\beta)cos(HA)$. Thus, leading to $cos(HA) = 1 \Rightarrow HA = 0$. \newline
+        
+        In addition, to minimise $sin(A)$ wrt. $\delta$, $\frac{dsin(A)}{d\delta} = 0$.
+        
+        \[\Rightarrow cos(\delta)sin(\beta) - sin(\delta)cos(\beta)\cdot 1 = 0\]
+        \[\Rightarrow cos(\delta)sin(\beta) = sin(\delta)cos(\beta)\]
+        \[\Rightarrow tan(\beta) = tan(\delta)\]
+        \[\beta = \delta\]
+        
+    \subsection*{Part b.}
+        \subsubsection*{i.}RA, Dec in J2000 for:
+            \begin{enumerate}
+                \item Alpha Centauri: (RA, Dec) = (14h 39m 37s, $-60\degree$ 50' 2")
+                \item GN-z11: (RA, Dec) = (12h 36m 25.46s, $+62\degree$ 14' 31.4")
+                \item Sag $A^*$: (RA, Dec) = (17h 45m 40.0409s, $−29\degree$ 0' 28.118")
+                \item 3C273: (RA, Dec) = (12h 29m 7s, $+2\degree$ 3' 9")
+            \end{enumerate}
+        \subsubsection*{ii.}
+        Best observatory for the above celestial objects would be:
+            \begin{enumerate}
+                \item Alpha Centauri: Since, GS is located 30$\degree$ South and Alpha Centauri is at $\delta -60\degree$, $\therefore$ GS is the better observatory for observing Alpha Centauri.
+                \item GN-z11: Since, GN is located 19$\degree$ North and GN-z11 is at $\delta ~ +62\degree$, $\therefore$ GN is the better observatory for observing GN-z11.
+                \item Sag $A^{*}$: Since, GS is located 30$\degree$ South and Sag $A^{*}$ is at $\delta ~ -29\degree$, $\therefore$ GS is the better observatory for observing Sag $A^{*}$.
+                \item 3C273: Since, GN is located 19$\degree$ North and 3C273 is at $\delta ~ +2\degree$, $\therefore$ GN is the better observatory for observing 3C273.
+            \end{enumerate}
+            
+        \subsubsection*{iii.}
+            At Vernal Equinox, Sun's $\alpha = 0$. $\therefore$ At midnight, Sun's $\alpha = 12$ hours.
+            Since, the Sun will be at the same location next midnight in 24 hours, $\therefore$ on the next midnight, Sun's $\alpha$ will be $24\times \frac{60}{365}$ minutes + $12 hours$.\newline
+            Thus, to find the date on which the object will transit at midnight, we need to find the number of days it will take for the Sun's $\alpha$ will be equal to the Celestial Objects RA. (The code can be found in Appendix)\newline
+            
+            Number of Days (Alpha Centauri):  40\newline
+            \textbf{Date on midnight (Alpha Centauri) 2000-04-29} \newline
+            Number of Days (GN-z11):  9\newline
+            \textbf{Date on midnight (GN-z11) 2000-03-29} \newline
+            Number of Days (SagA*):  87\newline
+            \textbf{Date on midnight (SagA*) 2000-06-15} \newline
+            Number of Days (3C273):  7\newline
+            \textbf{Date on midnight (3C273) 2000-03-27}\newline
+            
+        \subsubsection*{iv.}
+            Since, \[sin(A) = sin(\delta)sin(\beta) + cos(\delta)cos(\beta)cos(HA)\]
+            at max altitude, HA = 0. $\therefore$ Using, \[sin(A) = sin(\delta)sin(\beta) + cos(\delta)cos(\beta)\]
+            We can find the max altitude of each Celestial Object at the required Observatory using the above equation. (Code in Appendix)
+            The result is the following:
+            \textbf{Max Altitude of Alpha Centauri at GS:  61.07} $\degree$\newline
+            \textbf{ Max Altitude of GN-z11 at GN:  47.58$\degree$}\newline
+            \textbf{ Max Altitude of SagA* at GS:  88.75$\degree$}\newline
+            \textbf{Max Altitude of 3C273 at GN:  72.23$\degree$}\newline
+            
+        \subsubsection*{v.}
+        
+        To find the max time per night during which the object remains visible, at more than 30 degrees from the horizon, we need to find the HA when the object rises or sets at Altitude = 30 $\degree$.
+        Using,
+        \[HA = \arccos[{\frac{\sin{A}}{\cos{\delta}cos{\beta}} - \tan{\delta}\tan{\beta}}]\]
+        
+        Therefore, the visibility will be min(2$\times$HA, number of hours of darkness). (Code in Appendix.)
+        
+        The results are the following:
+        
+        \textbf{Alpha Centauri Visibility Hours:  12.21}\newline
+        \textbf{GN-z11 Visibility Hours:  10.96}\newline
+        \textbf{Sag-A* Visibility Hours:  12.92}\newline
+        \textbf{3C273 Visibility Hours:  11.0}\newline
+        
+    \subsubsection*{Final Table:}
+        The table \ref{table:1} summarizes the results from question 1b.
+        
+        \begin{table}[h!]
+        \centering
+        \begin{tabular}{|c| c| c| c| c | c | c|} 
+         \hline
+         Target & RA & Dec & Observatory & Date & Max A. & Obs. Time (hours) \\
+         \hline
+         \hline
+         Alpha Centauri & 14h 39m 37s & -60$\degree$50'02" & GS & April 29 & 61$\degree$ & 12.21 \\
+         \hline
+         GN-z11 & 12h 36m 25.46s & 62$\degree$14'31.4" & GN & March 29 & 48$\degree$ & 10.96 \\
+         \hline
+         Sag A* & 17h 45m 40.041s & -29$\degree$00'28.1" & GS & June 15 & 89$\degree$ & 12.92 \\
+         \hline
+         3C273 & 12h 29m 6.7s & +2$\degree$03'09" & GN & March 27 & 72$\degree$ & 11.0 \\
+         \hline
+        \end{tabular}
+        \caption{Results from Question 1B.}
+        \label{table:1}
+        \end{table}
+        
+        
+        
+            
+        
+        
+\section*{Appendix}
+
+Question 1) iii)
+\begin{python}
+import math
+import numpy as np 
+
+
+def RA_to_hours(RA: list) -> float:
+    '''Return hours given a list of hours, minutes and days.'''
+    hours, minutes, seconds = RA[0], RA[1], RA[2]
+    return hours + minutes/60 + seconds/(60*60)
+
+
+def number_days_till_midnight(RA_hours: float) -> int:
+    '''Return the number of days when object found at RA (in hours) is at midnight.'''
+    number_of_days = 0
+    if RA_hours == 12:
+        return 0
+    else:
+        midnighthours = 12
+        while midnighthours < RA_hours:
+            midnighthours += 3.945/60
+            number_of_days += 1
+        return number_of_days-1
+
+if __name__ == "__main__":
+    from datetime import datetime  
+    from datetime import timedelta 
+
+    vernal_equinox_date = datetime.strptime("2000-03-20", "%Y-%m-%d")
+
+    #Alpha Centauri
+    object_hours_alpha = RA_to_hours([14, 39, 37])
+    number_of_days_alpha = number_days_till_midnight(object_hours_alpha)
+    print('Number of Days (Alpha Centauri): ', number_of_days_alpha)
+    print("Date on midnight (Alpha Centauri)", vernal_equinox_date+timedelta(days=number_of_days_alpha))
+
+    #GN-z11
+    object_hours_gn = RA_to_hours([12, 36, 25.46])
+    number_of_days_gn = number_days_till_midnight(object_hours_gn)
+    print('Number of Days (GN-z11): ',number_of_days_gn)
+    print("Date on midnight (GN-z11)", vernal_equinox_date+timedelta(days=number_of_days_gn))
+
+    #SagA*
+    object_hours_sag = RA_to_hours([17, 45, 40.041])
+    number_of_days_sag = number_days_till_midnight(object_hours_sag)
+    print('Number of Days (SagA*): ', number_of_days_sag)
+    print("Date on midnight (SagA*)", vernal_equinox_date+timedelta(days=number_of_days_sag))
+
+    #3C273
+    object_hours_3C = RA_to_hours([12, 29, 6.7])
+    number_of_days_3C = number_days_till_midnight(object_hours_3C)
+    print('Number of Days (3C273): ',number_of_days_3C)
+    print("Date on midnight (3C273)", vernal_equinox_date+timedelta(days=number_of_days_3C))
+
+\end{python}
+\smallbreak
+Question 1) iv)
+\begin{python}
+import math
+
+def max_altitude(delta: list, observatory: str) -> float:
+    ''' '''
+    if observatory == "GN":
+        beta = 19.8238
+    if observatory == "GS":
+        beta = -30.24075
+    delta_radians = math.radians(delta[0] + delta[1]/60 + delta[2]/(60*60))
+    beta_radians = math.radians(beta)
+    return math.degrees(math.asin(math.sin(delta_radians)*math.sin(beta_radians) + math.cos(beta_radians)*math.cos(delta_radians)))
+
+
+if __name__ == "__main__":
+    #Alpha Centauri
+    print ("Max Altitude of Alpha Centauri at GS: ", max_altitude([-60, 50, 2], "GS"))
+    #GN-z11
+    print ("Max Altitude of GN-z11 at GN: ", max_altitude([62, 14, 31.4], "GN"))
+    #SagA*
+    print ("Max Altitude of SagA* at GS: ", max_altitude([-29, 00, 28.1], "GS"))
+    #3C273
+    print ("Max Altitude of 3C273 at GN: ", max_altitude([+2, 3, 9], "GN"))
+\end{python}
+
+Question 1)v)
+\begin{python}
+import math
+
+
+def visibility_hours(A: float, delta: list, observatory: str, dark_hours: float) -> float:
+    ''' '''
+    if observatory == "GN":
+        beta = 19.8238        
+    if observatory == "GS":
+        beta = -30.24075
+    delta_radians = math.radians(delta[0] + delta[1]/60 + delta[2]/(60*60))
+    beta_radians = math.radians(beta)
+    HA = math.degrees(math.acos((math.sin(A)/(math.cos(delta_radians)*math.cos(beta_radians))) - 
+        (math.tan(delta_radians)*math.tan(beta_radians))))
+
+    return min(2*HA/6, dark_hours)
+
+
+if __name__ == "__main__":
+    A = math.radians(30)
+    #Alpha Centauri
+    alpha_dark_hours = 24-11.79
+    print("Alpha Centauri Visibility Hours: ", visibility_hours(A, [-60, 50, 2], "GS", alpha_dark_hours))
+
+    #GN-z11
+    gn_dark_hours = 24-13.04
+    print("GN-z11 Visibility Hours: ", visibility_hours(A, [62, 14, 31.4], "GN", gn_dark_hours))
+
+    #SagA*
+    sag_dark_hours = 24-11.08
+    print("Sag-A* Visibility Hours: ", visibility_hours(A, [-29, 00, 28.1], "GS", sag_dark_hours))
+
+    #3C273
+    c_dark_hours = 24-13.00
+    print("3C273 Visibility Hours: ", visibility_hours(A, [+2, 3, 9], "GN", c_dark_hours))
+\end{python}
+\end{document}

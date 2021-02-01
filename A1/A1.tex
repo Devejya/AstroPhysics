@@ -4,7 +4,16 @@
 \usepackage{textcomp}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 \usepackage{pythonhighlight}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 \DeclareUnicodeCharacter{2212}{-}
 \title{PHYS270: Assignment 1}
 \author{Devejya Raghuvanshi }
@@ -48,7 +57,7 @@
         \subsubsection*{iii.}
             At Vernal Equinox, Sun's $\alpha = 0$. $\therefore$ At midnight, Sun's $\alpha = 12$ hours.
             Since, the Sun will be at the same location next midnight in 24 hours, $\therefore$ on the next midnight, Sun's $\alpha$ will be $24\times \frac{60}{365}$ minutes + $12 hours$.\newline
-            Thus, to find the date on which the object will transit at midnight, we need to find the number of days it will take for the Sun's $\alpha$ will be equal to the Celestial Objects RA. (The code can be found in Appendix)\newline
+            Thus, to find the date on which the object will transit at midnight, we need to find the number of days it will take for the Sun's $\alpha$ will be equal to the Celestial Objects RA. (The code \ref{code: 1)iii)} can be found in Appendix)\newline
             
             Number of Days (Alpha Centauri):  40\newline
             \textbf{Date on midnight (Alpha Centauri) 2000-04-29} \newline
@@ -62,7 +71,7 @@
         \subsubsection*{iv.}
             Since, \[sin(A) = sin(\delta)sin(\beta) + cos(\delta)cos(\beta)cos(HA)\]
             at max altitude, HA = 0. $\therefore$ Using, \[sin(A) = sin(\delta)sin(\beta) + cos(\delta)cos(\beta)\]
-            We can find the max altitude of each Celestial Object at the required Observatory using the above equation. (Code in Appendix)
+            We can find the max altitude of each Celestial Object at the required Observatory using the above equation. (Code \ref{code: 1)iv)} in Appendix)
             The result is the following:
             \textbf{Max Altitude of Alpha Centauri at GS:  61.07} $\degree$\newline
             \textbf{ Max Altitude of GN-z11 at GN:  47.58$\degree$}\newline
@@ -75,7 +84,7 @@
         Using,
         \[HA = \arccos[{\frac{\sin{A}}{\cos{\delta}cos{\beta}} - \tan{\delta}\tan{\beta}}]\]
         
-        Therefore, the visibility will be min(2$\times$HA, number of hours of darkness). (Code in Appendix.)
+        Therefore, the visibility will be min(2$\times$HA, number of hours of darkness). (Code \ref{code: 1)v)} in Appendix.)
         
         The results are the following:
         
@@ -109,12 +118,46 @@
         
         
         
-            
+\section*{Problem 2}
+    \subsection*{Part a)}
+        \ref{fig:Path of Star}
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=5cm]{A1Q2_1.png}
+            \caption{Path of Star}
+            \label{fig:Path of Star}
+        \end{figure}
+        (Code \ref{code: 2)a)} in Appendix)
+    \subsection*{Part b)}
+        Proper Motion := Change in (RA, Dec) over a years time.
+        
+        Therefore, following the steps below, we can find the proper motion:
+        \begin{itemize}
+            \item Pick a sample of days a year apart from each other.
+            \item Find the RA and Dec on those days for the star.
+            \item Find the slope of RA vs. Days and Dec vs. Days
+            \item Use the slopes, to find the proper motion, using:
+            \[proper motion = \sqrt{(Slope_{RA})^2+(Slope_{Dec})^2}\times 365.25\]
+        \end{itemize}
+        (Code \ref{code: 2)b)} in Appendix)
+        The resulting Proper Motion value is 349.78 mas/year
+        
+        Parallax := Maximum perpendicular distance between the RA vs. Dec linear fit and the position of the star.
+        
+        (Code \ref{code: 2)b)} in Appendix)
+    \subsection{Part C)}
+        Since d (in pc) = $\frac{1}{p (arcseconds)}$.
+        $\Rightarrow d = 7.72 pc$.
+        
+        Therefore, proper motion = 1.31 $\times 10^{-5}$ pc/year = 12.8 km/s
         
         
 \section*{Appendix}
 
-Question 1) iii)
+Question 1) iii) 
+\begin{equation}
+   \label{code: 1)iii)} 
+\end{equation}
 \begin{python}
 import math
 import numpy as np 
@@ -170,7 +213,10 @@ if __name__ == "__main__":
 
 \end{python}
 \smallbreak
-Question 1) iv)
+Question 1) iv) 
+\begin{equation}
+   \label{code: 1)iv)} 
+\end{equation}
 \begin{python}
 import math
 
@@ -197,6 +243,9 @@ if __name__ == "__main__":
 \end{python}
 
 Question 1)v)
+\begin{equation}
+   \label{code: 1)v)} 
+\end{equation}
 \begin{python}
 import math
 
@@ -232,5 +281,88 @@ if __name__ == "__main__":
     #3C273
     c_dark_hours = 24-13.00
     print("3C273 Visibility Hours: ", visibility_hours(A, [+2, 3, 9], "GN", c_dark_hours))
+\end{python}
+
+Question 2 a)
+\begin{equation}
+   \label{code: 2)a)} 
+\end{equation}
+\begin{python}
+from astropy.io import ascii
+import matplotlib.pyplot as plt
+
+
+def dRAvsdDec(filename: str, columns) -> None:
+    ''' Plot the deltaRA vs delta Dec given a file containing the position offset in
+    milliarcseconds, of a star as a function of time'''
+    data =ascii.read(filename, names=columns)
+    fig,ax=plt.subplots()
+    ax.scatter(data['RA'],data['Dec'])
+    #plt.axis([-430,400,-550,280])
+    plt.xlabel('$\Delta$RA (mas)')
+    plt.ylabel('$\Delta$Dec (mas)')
+    plt.show()
+    
+    return None
+    
+if __name__=="__main__":
+    filename = 'phy270_ass1_parallax.txt'
+    columns = ['Days', 'RA', 'Dec']
+    dRAvsdDec(filename, columns)    
+\end{python}
+
+Question 2 b)
+\begin{equation}
+   \label{code: 2)b)} 
+\end{equation}
+\begin{python}
+
+import datetime
+import numpy as np
+from astropy.io import ascii
+from scipy.stats import linregress
+
+
+def proper_motion(filename: str) -> float:
+    data = ascii.read(filename, names=['Days', 'RA', 'Dec'])
+
+    days_sample = np.arange(3)*365.25
+
+    sampleRA = np.interp(days_sample,data['Days'],data['RA'])
+    sampleDec = np.interp(days_sample,data['Days'],data['Dec'])
+
+    ra = linregress(days_sample,sampleRA)
+    dec = linregress(days_sample,sampleDec)
+
+    slope_ra = ra[0]
+    slope_dec = dec[0]
+
+    proper_motion_value = np.sqrt(slope_ra**2+slope_dec**2)*365.25
+    
+    return proper_motion_value
+    
+    
+def parallax(filename: str) -> float:
+
+    data = ascii.read(filename, names=['Days', 'RA', 'Dec'])
+
+    days_sample = np.arange(4)*365.25
+
+    sampleRA = np.interp(days_sample,data['Days'],data['RA'])
+    sampleDec = np.interp(days_sample,data['Days'],data['Dec'])
+
+    ra = linregress(days_sample,sampleRA)
+    dec = linregress(days_sample,sampleDec)
+
+    # Fit a line to RA as a function of Dec for the annually-separated points.  Then calculaate 
+    # the maximum perpendicular distance from this line to get the parallax	
+    ra_v_dec =linregress(ra,dec)
+    ra_v_dec_slope = ra_v_dec[0]
+    ra_v_dec_intercept = ra_v_dec[1]
+
+    x_min = (ra_v_dec_slope*(data['Dec']-ra_v_dec_intercept)+data['RA'])/(1+ra_v_dec_slope**2)
+    y_min = x_min*ra_v_dec_slope + ra_v_dec_intercept
+
+    return np.max(np.sqrt((x_min-data['RA'])*(x_min-data['RA']) + (y_min-data['Dec'])*(y_min-data['Dec'])))
 \end{python}
 \end{document}

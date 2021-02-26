@@ -15,7 +15,6 @@ class A2:
         self.temp_range = temp_range
         self.d_lambda = d_lambda
         self.ll_range = np.arange(1000,20000,d_lambda)
-        #constants
         self.h = constants.h.value
         self.c = constants.c.value
         self.k = constants.k_B.value
